@@ -26,11 +26,15 @@
             </ul>
         </div>
         </div>
+         <div class="loading-container" v-show="!distList.length">
+          <loading></loading>
+        </div>
       </scorll>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+import loading from '../../base/loading/loading'
 import { getRecommend, getDiscList } from '../../api/recommend'
 import Slider from '../../base/slider/slider'
 import Scorll from '../../base/scorll/scorll'
@@ -46,9 +50,11 @@ export default {
     this.$nextTick(() => {
       this._getRecommend()
     })
-    getDiscList().then((res) => {
-      this.distList = res.data.list
-    })
+    setTimeout(() => {
+      getDiscList().then((res) => {
+        this.distList = res.data.list
+      })
+    }, 20)
   },
   methods: {
     _getRecommend() {
@@ -68,7 +74,8 @@ export default {
   },
   components: {
     Slider,
-    Scorll
+    Scorll,
+    loading
   }
 }
 </script>
@@ -119,7 +126,8 @@ export default {
               color: $color-text-d
       .loading-container
         position: absolute
-        width: 100%
+        width : 100%
+        text-align :center
         top: 50%
         transform: translateY(-50%)
 </style>
