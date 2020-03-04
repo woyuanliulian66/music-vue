@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import BScorll from 'better-scroll'
+import BScroll from 'better-scroll'
 export default {
   props: {
     probeType: {
@@ -16,40 +16,81 @@ export default {
       type: Boolean,
       default: true
     },
+    listenScroll: {
+      type: Boolean,
+      default: false
+    },
     data: {
       type: Array,
-      // eslint-disable-next-line vue/require-valid-default-prop
-      default: function () {
-        return []
-      }
+      default: null
+    },
+    pullup: {
+      type: Boolean,
+      default: false
+    },
+    beforeScroll: {
+      type: Boolean,
+      default: false
+    },
+    refreshDelay: {
+      type: Number,
+      default: 20
+    },
+    autoPlay: {
+      type: Boolean,
+      default: true
     }
   },
   mounted() {
     setTimeout(() => {
       this._initScorll()
     }, 20)
-    // this.$nextTick(() => {
-    //   this._initScorll()
-    // })
   },
   methods: {
     _initScorll() {
       if (!this.$refs.wrapper) {
-        return false
+        return
       }
-      this.scorll = new BScorll(this.$refs.wrapper, {
+      this.scroll = new BScroll(this.$refs.wrapper, {
         probeType: this.probeType,
         click: this.click
       })
-    },
-    enable() {
-      this.scorll && this.scorll.enable()
+
+      if (this.listenScroll) {
+        let me = this
+        this.scroll.on('scroll', (pos) => {
+          me.$emit('scroll', pos)
+        })
+      }
+
+      if (this.pullup) {
+        this.scroll.on('scrollEnd', () => {
+          if (this.scroll.y <= (this.scroll.maxScrollY + 50)) {
+            this.$emit('scrollToEnd')
+          }
+        })
+      }
+
+      if (this.beforeScroll) {
+        this.scroll.on('beforeScrollStart', () => {
+          this.$emit('beforeScroll')
+        })
+      }
     },
     disable() {
-      this.scorll && this.scorll.disable()
+      this.scroll && this.scroll.disable()
+    },
+    enable() {
+      this.scroll && this.scroll.enable()
     },
     refresh() {
-      this.scorll && this.scorll.refresh()
+      this.scroll && this.scroll.refresh()
+    },
+    scrollTo() {
+      this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments)
+    },
+    scrollToElement() {
+      this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
     }
   },
   watch: {

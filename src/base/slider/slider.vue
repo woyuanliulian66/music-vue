@@ -69,7 +69,6 @@ export default {
       }
 
       this.$refs.sliderGroup.style.width = width + 'px'
-      console.log(this.$refs.sliderGroup.style.width)
     },
     _initdocs() {
       this.dots = new Array(this.children.length)
@@ -86,7 +85,6 @@ export default {
         }
       })
       this.slider.on('scrollEnd', () => {
-        // eslint-disable-next-line no-unused-vars
         let pageIndex = this.slider.getCurrentPage().pageX
         if (this.loop) {
           this.currentPageIndex = pageIndex
@@ -94,16 +92,19 @@ export default {
         this.currentPageIndex = pageIndex
 
         if (this.autoPlay) {
+          console.log('11111')
           clearTimeout(this.timer)
           this._play()
+        }
+      })
+      this.slider.on('beforeScrollStart', () => {
+        if (this.autoPlay) {
+          clearTimeout(this.timer)
         }
       })
     },
     _play() {
       let pageIndex = this.currentPageIndex + 1
-      // if (this.loop) {
-      //   pageIndex += 1
-      // }
       this.timer = setTimeout(() => {
         this.slider.goToPage(pageIndex, 0, 400)
       }, this.interval)

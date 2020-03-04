@@ -5,17 +5,13 @@ import $ from 'jquery'
 export default function jsonp(url, data) {
   url += (url.indexOf('?') < 0 ? '?' : '&') + 'data=' +
   encodeURIComponent(JSON.stringify(data))
-  //   var date
   var setting = {
     async: false,
     crossDomain: true,
     url: url,
     dataType: 'jsonp'
   }
-  console.log('进来了')
-  //   $.ajax(setting).done(function (data) {
-  //     date = data.singerList.data.singerlist
-  //   })
+  console.log(url)
   return new Promise((resolve, reject) => {
     $.ajax(setting)
       .done(function (data) {
@@ -24,5 +20,5 @@ export default function jsonp(url, data) {
       .fail(function (err) {
         reject(err)
       })
-  })
+  }).catch((e) => {})
 }
