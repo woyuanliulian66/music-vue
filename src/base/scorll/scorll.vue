@@ -1,5 +1,5 @@
 <template>
-    <div ref="wrapper">
+    <div ref="wrapper" class="aa">
         <slot></slot>
     </div>
 </template>

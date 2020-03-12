@@ -92,7 +92,6 @@ export default {
         this.currentPageIndex = pageIndex
 
         if (this.autoPlay) {
-          console.log('11111')
           clearTimeout(this.timer)
           this._play()
         }

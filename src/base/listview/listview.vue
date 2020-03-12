@@ -57,6 +57,9 @@ export default {
     }
   },
   methods: {
+    refresh() {
+      this.$refs.listview.refresh()
+    },
     onShortcutTouchstart(e) {
       let index = e.target.getAttribute('data-index')
       this.$refs.listview.scrollToElement(this.$refs.listgroup[index])

@@ -43,27 +43,42 @@ export function getSingerDetail(singerId) {
 
 // 获取播放时候需要的vkey
 // http://ws.stream.qqmusic.qq.com/C4000029cBk90JB3e9.m4a?guid=4009436916&vkey=DAE0F82AE5877714CDB9A6453DAEC6F532AC631CC522981EF1EFE6FECCBBFFD329C3F452F4C0C8815F3B4363BCFD593FF2B8790A2ABCB77A&uin=7064&fromtag=66
-export function getVkey(mid) {
-  var url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'
-  var data = {
-    'req_0': {
+export function getSongVkey(songmid) {
+  const url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'
+  const data = {
+    'req_0':
+    {
       'module': 'vkey.GetVkeyServer',
       'method': 'CgiGetVkey',
       'param': {
         'guid': '4009436916',
-        'songmid': [mid],
+        'songmid': [songmid],
         'songtype': [0],
         'uin': '1152921504999996312',
         'loginflag': 1,
         'platform': '20'
-      }},
+      }
+    },
     'comm': {
       'uin': '1152921504999996312',
       'format': 'json',
       'ct': 24,
-      'cv': 0}
-
+      'cv': 0
+    }
   }
+  // const data1 = Object.assign({}, {
+  //   callback: 'musicJsonCallback',
+  //   loginUin: 3051522991,
+  //   format: 'jsonp',
+  //   platform: 'yqq',
+  //   needNewCode: 0,
+  //   cid: 205361747,
+  //   uin: 3051522991,
+  //   guid: 5931742855,
+  //   songmid: songmid,
+  //   filename: `C400${songmid}.m4a`
+  // })
+
   return jsonp(url, data)
 }
 

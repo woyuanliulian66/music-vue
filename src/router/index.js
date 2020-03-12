@@ -1,11 +1,8 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-
+import Rank from 'components/rank/rank'
 import Recommend from 'components/recommend/recommend'
 import Search from 'components/search/search'
-import Singer from 'components/singer/singer'
-import Rank from 'components/rank/rank'
-import singerDetail from 'components/singer-detail/singer-detail'
+import Vue from 'vue'
+import Router from 'vue-router'
 
 Vue.use(Router)
 
@@ -17,15 +14,22 @@ export default new Router({
     },
     {
       path: '/rank',
-      component: Rank
+      component: Rank,
+      alias: '/aling'
     },
     {
       path: '/singer',
-      component: Singer,
+      component: () => import('components/singer/singer'),
+      // beforeEnter: (to, from, next) => {
+      //   console.log('路由钩子函数')
+      //   console.log(to)
+      //   console.log(from)
+      //   next()
+      // },
       children: [
         {
           path: ':id',
-          component: singerDetail
+          component: () => import('components/singer-detail/singer-detail')
         }
       ]
     },

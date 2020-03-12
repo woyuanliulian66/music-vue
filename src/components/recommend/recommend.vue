@@ -1,5 +1,5 @@
 <template>
-  <div class="recommend">
+  <div class="recommend" ref="recommend">
       <scorll ref="scorll" class="recommend-content" :data='recommends'>
         <div>
         <div v-if="recommends.length" class="slider-wrapper" ref="sliderWrapper">
@@ -39,7 +39,9 @@ import { getRecommend, getDiscList } from '../../api/recommend'
 import Slider from '../../base/slider/slider'
 import Scorll from '../../base/scorll/scorll'
 import { ERR_OK } from '../../api/config'
+import {playlistMixin} from '../../common/js/mixin'
 export default {
+  mixins: [playlistMixin],
   data() {
     return {
       recommends: [],
@@ -54,14 +56,18 @@ export default {
       getDiscList().then((res) => {
         this.distList = res.data.list
       })
-    }, 20)
+    }, 10)
   },
   methods: {
+    handlePlaylist(playlist) {
+      const bottom = playlist.length > 0 ? '60px' : '0px'
+      this.$refs.recommend.style.bottom = bottom
+      this.$refs.scorll.refresh()
+    },
     _getRecommend() {
       getRecommend().then((res) => {
         if (res.code === ERR_OK) {
           this.recommends = res.data.slider
-          // this.recommends = [1, 2]
         }
       })
     },

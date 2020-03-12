@@ -3,6 +3,8 @@
 // import {getLyric} from 'api/song'
 // import {ERR_OK} from 'api/config'
 // import {Base64} from 'js-base64'
+import { Base64 } from 'js-base64'
+import { getLyric } from '../../api/song-lyric'
 export default class song {
   constructor({ id, mid, singer, name, album, duration, image, url }) {
     this.id = id
@@ -14,6 +16,22 @@ export default class song {
     this.image = image
     this.url = url
   }
+  getLyric() {
+    if (this.lyric) {
+      return Promise.resolve(this.lyric)
+    }
+    return new Promise((resolve, reject) => {
+      getLyric(this.mid).then((res) => {
+        if (res.data.retcode === 0) {
+          this.lyric = Base64.decode(res.data.lyric)
+          resolve(this.lyric)
+        } else {
+          // eslint-disable-next-line prefer-promise-reject-errors
+          reject('no lyric')
+        }
+      })
+    })
+  }
 }
 
 export function createSong(list) {
@@ -22,13 +40,14 @@ export function createSong(list) {
     id: list.id,
     mid: list.mid,
     singer: list.singer[0].name,
+    media_mid: list.file.media_mid,
     name: list.title,
     album: list.album.title,
     duration: list.interval,
     // 图片地址
     image: `https://y.gtimg.cn/music/photo_new/T001R300x300M000${list.singer[0].mid}.jpg?max_age=2592000`,
     // url地址
-    url: ''
+    url: `http://ws.stream.qqmusic.qq.com/${list.vkey}`
   })
 }
 

@@ -1,7 +1,7 @@
 <template>
     <div class="song-list">
         <ul>
-            <li v-for="(item, index) in songs" :key="index" class="item">
+            <li @click="selectItem(item, index)" v-for="(item, index) in songs" :key="index" class="item">
                 <div class="content">
                     <h2 class="name">
                         {{item.name}}
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+// eslint-disable-next-line no-unused-vars
 import song from '../../common/js/song'
 export default {
   props: {
@@ -27,6 +28,9 @@ export default {
     }
   },
   methods: {
+    selectItem(item, index) {
+      this.$emit('select', item, index)
+    },
     getDesc(songs) {
       return `${songs.singer}-${songs.album}`
     }

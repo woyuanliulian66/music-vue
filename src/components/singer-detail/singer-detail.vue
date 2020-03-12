@@ -6,7 +6,7 @@
 
 <script>
 import {mapGetters} from 'vuex'
-import { getSingerDetail } from '../../api/singer'
+import { getSingerDetail, getSongVkey } from '../../api/singer'
 import {createSong} from '../../common/js/song'
 import MusicList from '../../components/music-list/music-list'
 
@@ -28,8 +28,6 @@ export default {
     ])
   },
   created() {
-    console.log(this.singer)
-    console.log(this.singer.name)
     this._getSingerDetail()
   },
   methods: {
@@ -38,8 +36,16 @@ export default {
         this.$router.push('/singer')
         return
       }
-      getSingerDetail(this.singer.id).then((res) => {
+      getSingerDetail(this.singer.id).then(async (res) => {
         if (res.code === 0) {
+          let ret = res.singerSongList.data.songList
+          for (var i = 0; i < ret.length; i++) {
+            let tmp = ret[i].songInfo.mid
+            let rest = await getSongVkey(tmp)
+            if (rest.req_0.data.midurlinfo[0]) {
+              ret[i].songInfo.vkey = rest.req_0.data.midurlinfo[0].purl
+            }
+          }
           this.songs = this._normalListSongs(res.singerSongList.data.songList)
         }
       })
@@ -49,6 +55,7 @@ export default {
       list.forEach(ele => {
         ret.push(createSong(ele.songInfo))
       })
+      console.log(ret)
       return ret
     }
   },

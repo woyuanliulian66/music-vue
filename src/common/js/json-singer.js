@@ -11,7 +11,7 @@ export default function jsonp(url, data) {
     url: url,
     dataType: 'jsonp'
   }
-  console.log(url)
+  // console.log(url)
   return new Promise((resolve, reject) => {
     $.ajax(setting)
       .done(function (data) {
