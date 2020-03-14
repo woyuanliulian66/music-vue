@@ -14,6 +14,8 @@ export const currentIndex = state => state.currentIndex
 
 // export const playing = state => state.playing
 
+export const recommendSongList = state => state.recommendSongList
+
 export const currentSong = state => {
   return state.playList[state.currentIndex] || {}
 }

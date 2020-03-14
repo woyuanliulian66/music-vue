@@ -22,6 +22,9 @@ const mutations = {
   },
   [types.SET_CURRENT_INDEX](state, index) {
     state.currentIndex = index
+  },
+  [types.SET_SONG_LIST](state, index) {
+    state.recommendSongList = index
   }
 }
 

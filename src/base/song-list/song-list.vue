@@ -27,6 +27,10 @@ export default {
       }
     }
   },
+  methods() {
+    console.log(this.songs)
+  },
+  // eslint-disable-next-line no-dupe-keys
   methods: {
     selectItem(item, index) {
       this.$emit('select', item, index)

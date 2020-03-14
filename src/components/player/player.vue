@@ -154,7 +154,6 @@ export default {
   },
   methods: {
     middleTouchStart(e) {
-      console.log('111')
       this.touch.init = false
       this.touch.moved = false
       const touch = e.touches[0]
@@ -162,7 +161,6 @@ export default {
       this.touch.startY = touch.pageY
     },
     middleTouchMove(e) {
-      console.log('22')
       if (this.touch.init) {
         return
       }
@@ -178,7 +176,6 @@ export default {
       const left = this.currentShow === 'cd' ? 0 : -window.innerWidth
       const width = Math.min(0, Math.max(-window.innerWidth, left + delX))
       this.touch.percent = Math.abs(width / window.innerWidth)
-      console.log(width)
       this.$refs.lyricList.$el.style['transform'] = `translate3d(${width}px, 0, 0 )`
       this.$refs.lyricList.$el.style['transitionDuration'] = '300ms'
       this.$refs.middleL.style.opacity = 1 - this.touch.percent

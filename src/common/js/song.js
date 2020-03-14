@@ -1,8 +1,3 @@
-// import { singer } from "../../store/getter"
-
-// import {getLyric} from 'api/song'
-// import {ERR_OK} from 'api/config'
-// import {Base64} from 'js-base64'
 import { Base64 } from 'js-base64'
 import { getLyric } from '../../api/song-lyric'
 export default class song {
@@ -48,6 +43,23 @@ export function createSong(list) {
     image: `https://y.gtimg.cn/music/photo_new/T001R300x300M000${list.singer[0].mid}.jpg?max_age=2592000`,
     // url地址
     url: `http://ws.stream.qqmusic.qq.com/${list.vkey}`
+  })
+}
+
+export function createSongList(list) {
+  // eslint-disable-next-line new-cap
+  return new song({
+    id: list.albummid,
+    mid: list.songmid,
+    singer: list.singer[0].name,
+    songmid: list.songmid,
+    duration: list.interval,
+    name: list.songname,
+    media_mid: list.strMediaMid,
+    album: list.albummid,
+    vkey: list.vkey,
+    image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${list.albummid}_1.jpg?max_age=2592000`,
+    url: `http://isure.stream.qqmusic.qq.com/${list.vkey}`
   })
 }
 

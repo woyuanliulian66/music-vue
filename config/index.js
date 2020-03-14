@@ -11,7 +11,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/':{
+      '/splcloud':{
         target:'https://c.y.qq.com',
         secure: false,
         changeOrigin: true,
@@ -21,13 +21,35 @@ module.exports = {
         headers :{
           referer: 'https://c.y.qq.com'
         }
+      },
+      '/qzone': {
+        target:'https://c.y.qq.com',
+        secure: false,
+        changeOrigin: true,
+        pathRewrite: {
+          '^api': '/'
+        },
+        headers: {
+          referer:'https://y.qq.com/'
+        }
+      },
+      '/lyric': {
+        target: 'https://c.y.qq.com',
+        secure: false,
+        changeOrigin: true,
+        pathRewrite: {
+          '^api': '/'
+        },
+        headers: {
+          referer:'https://y.qq.com/'
+        }
       }
     },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
-    autoOpenBrowser: false,
+    autoOpenBrowser: true,
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-

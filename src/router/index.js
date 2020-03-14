@@ -10,7 +10,13 @@ export default new Router({
   routes: [
     {
       path: '/recommend',
-      component: Recommend
+      component: Recommend,
+      children: [
+        {
+          path: ':id',
+          component: () => import('components/disc/disc')
+        }
+      ]
     },
     {
       path: '/rank',
